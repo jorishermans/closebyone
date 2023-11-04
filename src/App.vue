@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import PersonForm from "./components/PersonForm.vue";
-import NavBar from "./components/NavBar.vue";
-import NavItem from "./components/NavItem.vue";
+import NavBar from "./components/core/NavBar.vue";
+import NavItem from "./components/core/NavItem.vue";
 import { useWeb5Service } from "./hooks/useWeb5Service";
 
 const did = ref<string | null>(null);

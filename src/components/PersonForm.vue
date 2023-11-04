@@ -51,10 +51,10 @@ onBeforeMount(async () => {
     width: 250px;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #333;
+    border: 2px solid #333;
     border-radius: 3px;
 }
 .editfield:focus {
-    border: 2px solid #000;
+    border-bottom: 2px solid #646cff;
 }
 </style>
