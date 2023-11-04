@@ -13,7 +13,7 @@ const submitForm = async () => {
     feedback.value = 'Success'
 }
 
-const personRef = ref(null)
+const personRef = ref()
 let personService: PersonService, 
     person: WithContext<Person>;
 

@@ -2,7 +2,9 @@
 import { ref, provide } from 'vue'
 export default {
     setup(_props: any, {slots}) {
-        const tabTitles = ref(slots.default().map((navItem: any) => navItem.props.title));
+        const slotsRef = slots !== undefined && slots.default !== undefined 
+                                    ? slots.default() : [];
+        const tabTitles = ref((slotsRef)?.map((navItem: any) => navItem.props.title));
         const selectedTitle = ref(tabTitles.value[0])
 
         provide("selectedTitle", selectedTitle);
