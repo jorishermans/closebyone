@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@web5/api": "^0.8.1",
-    "naive-ui": "^2.35.0",
     "schema-dts": "^1.1.2",
     "vue": "^3.3.4"
   },
