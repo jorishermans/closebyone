@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import PersonForm from "./components/PersonForm.vue";
+import LocationSection from "./components/location/LocationSection.vue"
 import NavBar from "./components/core/NavBar.vue";
 import NavItem from "./components/core/NavItem.vue";
 import { useWeb5Service } from "./hooks/useWeb5Service";
@@ -21,7 +22,7 @@ const login = async () => {
   <div v-if="did && !loading"><div class="did small">{{ did }}</div>
   <NavBar>
     <NavItem title="Locations">
-      Locations
+      <LocationSection></LocationSection>
     </NavItem>
     <NavItem title="User Profile">
       <PersonForm></PersonForm>

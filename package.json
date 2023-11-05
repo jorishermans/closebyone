@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@web5/api": "^0.8.1",
+    "as-geo-web-coordinate": "^0.8.0",
+    "js-geo-web-coordinate": "^0.3.7",
+    "leaflet": "^1.9.4",
     "schema-dts": "^1.1.2",
     "vue": "^3.3.4"
   },
