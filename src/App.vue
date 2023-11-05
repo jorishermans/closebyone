@@ -33,6 +33,10 @@ const login = async () => {
   
   </div>
   <div v-if="!did && !loading">
+    <p>A geo messaging application that takes your data seriously. <br />
+      Build up with a decentralized mindset.
+    </p>
+
     <button @click="login">login</button>
   </div>
 </template>
