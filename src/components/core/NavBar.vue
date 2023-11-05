@@ -67,4 +67,19 @@ export default {
     background-color: #1a1a1a;
     color: rgba(255, 255, 255, 0.87);
 }
+@media (prefers-color-scheme: light) { 
+    .nav-item {
+        color: #1a1a1a;
+    }
+    .nav-item:hover {
+        background-color: #f9f9f9;
+        color: #2a2a2a;
+    }
+    .nav-body {
+        align-items: center;
+        display: flex;
+        list-style: none;
+        border-bottom: 1px solid #abb6bf;
+    }
+}
 </style>
