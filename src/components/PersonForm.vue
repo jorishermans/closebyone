@@ -28,7 +28,7 @@ onBeforeMount(async () => {
 <template>
   <div><h2>User Profile</h2></div>
   <p>{{ feedback }}</p>
-  <form v-if="personRef" @submit.prevent="submitForm">
+  <form class="person-form" v-if="personRef" @submit.prevent="submitForm">
       <div><input id="firstname" 
         class="editfield" v-model="personRef.name" 
         type="text" placeholder="Name" /></div>
@@ -40,6 +40,9 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
+.person-form {
+    width: 80vw;
+}
 .read-the-docs {
   color: #888;
 }
