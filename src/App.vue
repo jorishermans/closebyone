@@ -39,6 +39,7 @@ const login = async () => {
 
     <button @click="login">login</button>
   </div>
+  <div v-if="loading"> Loading ... </div>
 </template>
 
 <style scoped>
