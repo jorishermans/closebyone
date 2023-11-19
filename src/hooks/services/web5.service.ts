@@ -19,12 +19,13 @@ export class Web5Service {
         }
     }
 
-    public async fetch(schema: string) {
+    public async fetch(schema: string, extrafilter: {} = {}) {
         if (this.web5) {
             const { records } = await this.web5.dwn.records.query({
                 message: {
                   filter: {
-                    schema: schema
+                    schema: schema,
+                    ... extrafilter
                   }
                 }
               });

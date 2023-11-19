@@ -3,12 +3,16 @@
     <div v-if="locationGranted">
         <div id="mapContainer"></div>
     </div>
+    <div>
+      <CreateMessage @send="submit"></CreateMessage>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { ref } from 'vue'
+import CreateMessage from './CreateMessage.vue';
 
 // const store = useLocationStore()
 const status = ref('wait')
@@ -57,12 +61,16 @@ navigator.permissions
   .then(function (result) {
     /* ... */
   })
+
+const submit = (value: string) => {
+  console.log(value);
+}
 </script>
 
 <style scoped>
 #mapContainer {
   width: 80vw;
-  height: 200px;
+  height: 175px;
   margin-bottom: 15px;
 }
 .content-msg {
