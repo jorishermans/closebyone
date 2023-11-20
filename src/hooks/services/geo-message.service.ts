@@ -1,4 +1,4 @@
-import { Message, Person, WithContext } from "schema-dts";
+import { Message, WithContext } from "schema-dts";
 import { Web5Service } from "./web5.service";
 
 export class GeoMessageService {

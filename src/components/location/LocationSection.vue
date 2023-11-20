@@ -57,8 +57,8 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
 })
 
 navigator.permissions
-  .query({ name: 'push', userVisibleOnly: true })
-  .then(function (result) {
+  .query({ name: 'push' })
+  .then(function (_result: PermissionStatus) {
     /* ... */
   })
 
