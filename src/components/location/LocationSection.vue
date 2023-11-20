@@ -60,8 +60,9 @@ interface PushPermissions extends PushSubscriptionOptionsInit, PermissionDescrip
 
 navigator.permissions
   .query({ name: 'push', userVisibleOnly:true } as PushPermissions)
-  .then(function (_result: PermissionStatus) {
+  .then(function (result: PermissionStatus) {
     /* ... */
+    console.log(result);
   })
 
 const submit = (value: string) => {
