@@ -56,8 +56,10 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
   handleLocationPermission(result)
 })
 
+interface PushPermissions extends PushSubscriptionOptionsInit, PermissionDescriptor {}
+
 navigator.permissions
-  .query({ name: 'push' })
+  .query({ name: 'push', userVisibleOnly:true } as PushPermissions)
   .then(function (_result: PermissionStatus) {
     /* ... */
   })
