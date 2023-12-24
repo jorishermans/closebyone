@@ -22,10 +22,10 @@ export class Web5Service {
     public async fetch(schema: string, extrafilter: {} = {}) {
         if (this.web5) {
             const { records } = await this.web5.dwn.records.query({
+                ... extrafilter,
                 message: {
                   filter: {
-                    schema: schema,
-                    ... extrafilter
+                    schema: schema,    
                   }
                 }
               });

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
 import { useWeb5Service } from '../hooks/useWeb5Service';
-import { usePersonService } from '../hooks/usePersonService';
+import { usePersonService } from '../hooks/use-person.service';
 import { PersonService } from '../hooks/services/person.service';
 import { Person, WithContext } from "schema-dts";
 

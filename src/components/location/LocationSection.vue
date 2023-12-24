@@ -3,18 +3,31 @@
     <div v-if="locationGranted">
         <div id="mapContainer"></div>
     </div>
-    <div>
+    <div>{{ locationHash }}</div>
+    <div v-if="locationHash">
       <CreateMessage @send="submit"></CreateMessage>
+    </div>
+    <div v-for="message of messagesRef">
+      <LocationMessage :message="message"></LocationMessage>
     </div>
 </template>
 
 <script lang="ts" setup>
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CreateMessage from './CreateMessage.vue';
+import LocationMessage from './LocationMessage.vue';
+import { GeoMessageService } from '../../hooks/services/geo-message.service';
+import { useWeb5Service } from '../../hooks/useWeb5Service';
+import { Message, Person, WithContext } from 'schema-dts';
+import { useGeoMessageService } from '../../hooks/use-geo-message.service';
+import { PersonService } from '../../hooks/services/person.service';
+import { usePersonService } from '../../hooks/use-person.service';
+import { GeoWebCoordinate } from 'js-geo-web-coordinate';
 
 // const store = useLocationStore()
+const locationHash = ref('');
 const status = ref('wait')
 const locationGranted = ref(false)
 const handleLocationPermission = (result: PermissionStatus) => {
@@ -37,6 +50,12 @@ navigator.geolocation.getCurrentPosition(
     // store
     //  .setCoordinates(result.coords)
     //  .then(() => storeLocationName.retrieveNames())
+    const _gwCoord = GeoWebCoordinate.fromGPS(
+        result.coords.longitude,
+        result.coords.latitude
+      )
+    locationHash.value = _gwCoord.toString()
+    console.log(locationHash);
     locationGranted.value = true
     const map = L.map('mapContainer').setView(
       [result.coords.latitude, result.coords.longitude],
@@ -65,20 +84,39 @@ navigator.permissions
     console.log(result);
   })
 
-const submit = (value: string) => {
+const submit = async (value: string) => {
   console.log(value);
+
+  //
+  const message = geoMessageService.createGeoMessage(locationHash.value, value, person);
+  messages = await geoMessageService.create(message);
+  messagesRef.value = messages;
 }
+
+const messagesRef = ref()
+let geoMessageService: GeoMessageService,
+    personService: PersonService,
+    messages: WithContext<Message>[],
+    person: WithContext<Person>;
+
+watch(locationHash, async (newLocationHash, _locationHash) => {
+    const { service } = await useWeb5Service();
+    geoMessageService = await useGeoMessageService(service);
+    personService = await usePersonService(service);
+    messages = await geoMessageService.fetch(newLocationHash);
+    person = await personService.fetch();
+    messagesRef.value = messages;
+    console.log(messages);
+})
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #mapContainer {
   width: 80vw;
   height: 175px;
   margin-bottom: 15px;
 }
-.content-msg {
-  margin: 15px 0;
-}
+
 .content-item {
   margin: 5px 0;
 }

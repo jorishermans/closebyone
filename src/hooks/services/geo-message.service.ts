@@ -1,44 +1,51 @@
-import { Message, WithContext } from "schema-dts";
+import { Message, Person, WithContext } from "schema-dts";
 import { Web5Service } from "./web5.service";
 
 export class GeoMessageService {
-    public message: WithContext<Message>;
+    public messages: WithContext<Message>[] = [];
     public context = 'https://schema.org';
     public type = 'Message';
 
-    private data: any;
 
     constructor(public web5service: Web5Service) {
-        this.message = {
+        this.messages = [];
+    }
+
+    public createGeoMessage(locationId: string, text: string,
+        person: any): WithContext<Message> {
+        return {
             '@context': 'https://schema.org',
             '@type': 'Message',
-            name: '',
             sender: {
                 "@type": "Person",
-                name: "Dom Portwood"
+                ... person
             },
-            datePublished: "2016-02-29",
-            text: "",
-            locationCreated: ""
-        }
+            datePublished: new Date().toISOString(),
+            text: text,
+            locationCreated: locationId
+        };
     }
 
-    public async fetch() {
-        const result = await this.web5service.fetch(`${this.context}/${this.type}`)
+    public async fetch(locationHash: string) {
+        const result = await this.web5service
+                        .fetch(`${this.context}/${this.type}`, 
+                        { data: { locationCreated: locationHash } })
         if (result && result.length > 0) {
-            this.message = await result[0].data.json() as WithContext<Message>;
-            this.data = result[0];
+            const messages: WithContext<Message>[] = []
+            for (let record of result) {
+                const message = await record.data.json() as WithContext<Message>;
+                messages.push(message);
+            }
+            this.messages = messages;
         }
-        return this.message;
+        return this.messages;
     }
 
-    public async update(p: WithContext<Message>) {
-        this.message = p;
-        if (this.data) {
-            // update
-            await this.data.update({ data: this.message});
-        }
-        this.data = await this.web5service.create(this.message, `${this.context}/${this.type}`);
+    public async create(message: WithContext<Message>) {
+        const data = await this.web5service.create(message, `${this.context}/${this.type}`);
+        const returned_message = await data?.data.json();
+        this.messages.push(returned_message);
+        return this.messages;
     }
 
 }
